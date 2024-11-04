@@ -1,0 +1,269 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  user-select: none;
+}
+
+ul,
+ul li a {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+html {
+  font-family: var(--font-body);
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo,
+    monospace;
+  font-size: 1em;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+table {
+  border-color: currentcolor;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+  appearance: button;
+}
+
+/* RESET */
+
+/* VARIABLES */
+:root {
+  --color-white: #fcfcfc;
+  --color-black: #1c1c1c;
+  --font-title: Anton, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-body: Poppins, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-body2: Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* VARIABLES */
+
+/* Utilities */
+
+.text-center {
+  text-align: center;
+}
+
+/* Utilities */
+
+body {
+  background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+  padding: 2em 0 0;
+  height: 100vh;
+}
+
+.library {
+  width: 800px;
+  margin-inline: auto;
+}
+
+.library.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.library.header .header__title {
+  display: flex;
+  gap: 0.5em;
+}
+
+.library.header .header__title h1,
+.library.header .header__title p {
+  font-family: var(--font-title);
+}
+
+.library.header .header__title p {
+  font-size: 0.8em;
+}
+
+.library.header .header__login {
+  background: none;
+  border: 1px solid var(--color-black);
+  height: 2.5em;
+  padding: 0 2em;
+  border-radius: 2em;
+  color: var(--color-black);
+  transition: all ease-in-out 200ms;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.library.header .header__login:hover {
+  background: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
+  color: var(--color-white);
+}
+
+.library.footer {
+  text-align: center;
+  font-family: var(--font-body);
+}
+
+.library.footer a,
+.library.footer a:visited,
+.library.footer a:active {
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+.library.main {
+  background-color: var(--color-white);
+  padding: 3em;
+  position: relative;
+  height: 80vh;
+  margin: 2em auto;
+  border-radius: 50px;
+  box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
+  -webkit-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
+}
+
+.library.main .main__container {
+  position: relative;
+  height: 100%;
+}
+
+.library.main .main__container .main__footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.library.main .main__container .main__footer button {
+  color: var(--color-white);
+  background: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+  border: none;
+  font-size: 1.5em;
+  padding: 0.3em 0.5em;
+  border-radius: 1em;
+  cursor: pointer;
+  box-shadow: 0px 0px 25px -5px rgba(0, 0, 0, 0.74);
+  -webkit-box-shadow: 0px 0px 25px -5px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 0px 0px 25px -5px rgba(0, 0, 0, 0.74);
+  transition: all ease-in-out 200ms;
+}
+
+.library.main .main__container .main__footer button:hover {
+  background: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+  color: var(--color-black);
+}
+
+.library.main .main__container .main__content {
+  transition: all ease-in-out 300ms;
+}
+
+.library.main .main__container .main__content .main__content__dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 375px;
+  border: none;
+  border-radius: 1.5em;
+  padding: 2em;
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
+::backdrop {
+  background-color: var(--color-black);
+}
+
+dialog.show {
+  animation: fadein 200ms ease-in forwards;
+}
+
+dialog[open]::backdrop {
+  animation: fadein-backdrop 200ms ease-in forwards;
+}
+
+.library.main .main__container .main__content .main__content__dialog.close {
+  opacity: 1;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein-backdrop {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="common/app.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+
+    <title>Project: Library</title>
+  </head>
+  <body>
+    <header class="library header">
+      <div class="header__title">
+        <h1>
+          <span class="mdi mdi-book-open-page-variant-outline"></span>
+        </h1>
+        <div>
+          <h1>BookVault</h1>
+          <p>Your Personal Library Hub</p>
+        </div>
+      </div>
+
+      <button class="header__login">
+        <span class="mdi mdi-account-circle"></span> Log In
+      </button>
+    </header>
+
+    <main class="library main">
+      <div class="main__container">
+        <div class="main__header">
+          <h1 class="text-center">List of Books</h1>
+        </div>
+        <div class="main__content">
+          <dialog class="main__content__dialog">
+            <form method="dialog">
+              <h1>This is dialog</h1>
+              <button class="dialog__save__save">Save</button>
+              <button class="dialog__btn__cancel">Cancel</button>
+            </form>
+          </dialog>
+        </div>
+        <div class="main__footer">
+          <button class="btn main__btn__add">
+            <span class="mdi mdi-plus-circle-outline"></span> Add Book
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="library footer">
+      <a
+        href="https://github.com/iRenanMatthew/Library-List"
+        rel="noopener"
+        target="_blank"
+        >Copyright © <span class="footer__year text-center"></span> Renan
+        Matthew Fajardo</a
+      >
+    </footer>
+
+    <script src="common/app.js" defer></script>
+  </body>
+</html>
