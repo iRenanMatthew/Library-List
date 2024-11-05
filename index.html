@@ -34,20 +34,55 @@
       </button>
     </header>
 
-    <main class="library main">
+    <main class="library main card">
       <div class="main__container">
         <div class="main__header">
           <h1 class="text-center">List of Books</h1>
         </div>
-        <div class="main__content">
-          <dialog class="main__content__dialog">
-            <form method="dialog">
-              <h1>This is dialog</h1>
-              <button class="dialog__save__save">Save</button>
-              <button class="dialog__btn__cancel">Cancel</button>
-            </form>
-          </dialog>
-        </div>
+        <div class="main__content"></div>
+        <dialog class="main__content__dialog">
+          <form method="dialog" id="bookForm">
+            <h1 class="text-center">Add new book</h1>
+            <fieldset>
+              <input
+                type="text"
+                name="book_title"
+                id="book_title"
+                placeholder="Title"
+                required
+              />
+            </fieldset>
+            <fieldset>
+              <input
+                type="text"
+                name="book_author"
+                id="book_author"
+                placeholder="Author"
+                pattern="[a-zA-Z].*"
+                required
+              />
+            </fieldset>
+            <fieldset>
+              <input
+                type="number"
+                name="book_pages"
+                placeholder="Pages"
+                min="1"
+                max="10000"
+                id="book_pages"
+                required
+              />
+            </fieldset>
+            <fieldset class="checkbox">
+              <label for="book_read">Have you read it?</label>
+              <input type="checkbox" id="book_read" />
+            </fieldset>
+            <div class="dialog__btn">
+              <button type="submit" class="dialog__btn__save">Save</button>
+              <button type="button" class="dialog__btn__cancel">Cancel</button>
+            </div>
+          </form>
+        </dialog>
         <div class="main__footer">
           <button class="btn main__btn__add">
             <span class="mdi mdi-plus-circle-outline"></span> Add Book

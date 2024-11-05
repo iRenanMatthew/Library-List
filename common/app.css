@@ -94,23 +94,55 @@ button,
   appearance: button;
 }
 
+fieldset {
+  border: none;
+  text-align: center;
+}
+
+fieldset input {
+  background-color: var(--color-gray);
+}
+
+fieldset input:not([type="checkbox"]) {
+  border: none;
+  width: 100%;
+  padding: 0.8em 1em;
+  border-radius: 0.5em;
+  margin: 0.5em 0;
+}
+
+fieldset.checkbox {
+  padding: 1em;
+}
+
 /* RESET */
 
 /* VARIABLES */
 :root {
   --color-white: #fcfcfc;
+  --color-white1: linear-gradient(to top, #e7e7e7 0%, #cdefff 100%);
   --color-black: #1c1c1c;
+  --color-gray: #e9e9e9c0;
+  --color-green: #7bff6d;
+  --color-red: #ff8383;
   --font-title: Anton, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --font-body: Poppins, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --font-body2: Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
-
 /* VARIABLES */
 
 /* Utilities */
 
 .text-center {
   text-align: center;
+}
+
+.card {
+  background-color: var(--color-white);
+  position: relative;
+  box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
+  -webkit-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
 }
 
 /* Utilities */
@@ -175,16 +207,12 @@ body {
   color: var(--color-black);
 }
 
-.library.main {
-  background-color: var(--color-white);
+.library.main.card {
   padding: 3em;
-  position: relative;
   height: 80vh;
   margin: 2em auto;
   border-radius: 50px;
-  box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
-  -webkit-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
-  -moz-box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.74);
+  overflow-y: auto;
 }
 
 .library.main .main__container {
@@ -218,10 +246,18 @@ body {
 }
 
 .library.main .main__container .main__content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
   transition: all ease-in-out 300ms;
+  padding: 1em 0;
 }
 
-.library.main .main__container .main__content .main__content__dialog {
+.library.main .main__container .main__content__dialog h1 {
+  margin-bottom: 0.5em;
+}
+
+.library.main .main__container .main__content__dialog {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -232,6 +268,7 @@ body {
   padding: 2em;
   opacity: 0;
   transition: opacity 300ms ease-in;
+  z-index: 9999;
 }
 
 ::backdrop {
@@ -242,12 +279,16 @@ dialog.show {
   animation: fadein 200ms ease-in forwards;
 }
 
-dialog[open]::backdrop {
+dialog.show::backdrop {
   animation: fadein-backdrop 200ms ease-in forwards;
 }
 
-.library.main .main__container .main__content .main__content__dialog.close {
-  opacity: 1;
+dialog.hide {
+  animation: fadeout 200ms ease-in forwards;
+}
+
+dialog.hide::backdrop {
+  animation: fadeout-backdrop 200ms ease-in forwards;
 }
 
 @keyframes fadein {
@@ -264,6 +305,89 @@ dialog[open]::backdrop {
     opacity: 0;
   }
   100% {
-    opacity: 0.6;
+    opacity: 0.3;
   }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout-backdrop {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.dialog__btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.dialog__btn__save,
+.dialog__btn__cancel {
+  background: var(--color-gray);
+  border: none;
+  border-radius: 0.5em;
+  width: calc(100% / 2);
+  padding: 0.5em;
+  font-weight: bold;
+  transition: opacity ease-in-out 100ms;
+}
+
+.dialog__btn button:hover,
+.main__content__card .card__btn button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.dialog__btn__save,
+.main__content__card .card__btn button:first-child {
+  background-color: var(--color-green);
+}
+
+.main__content__card {
+  display: flex;
+  flex-flow: nowrap column;
+  justify-content: space-between;
+  padding: 1em;
+  height: 250px;
+  max-height: 250px;
+  gap: 2em;
+  border-radius: 0.5em;
+  background: var(--color-white1);
+  box-shadow: 0px 5px 30px -25px rgba(0, 0, 0, 0.74);
+  -webkit-box-shadow: 0px 5px 30px -25px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 0px 5px 30px -25px rgba(0, 0, 0, 0.74);
+}
+
+.main__content__card .card__text {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.main__content__card .card__text p span {
+  font-weight: bold;
+}
+
+.main__content__card .card__btn {
+  display: flex;
+  flex-flow: nowrap column;
+  gap: 0.5em;
+}
+
+.main__content__card .card__btn button {
+  background: var(--color-red);
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.5em;
 }
