@@ -97,6 +97,7 @@ function addBooktoLibrary(title, book, pages, read) {
   updateList();
 }
 function updateList() {
+  mainContentHTML = "";
   myLibrary.forEach(({ title, author, pages, read }) => {
     mainContentHTML += `
     <div class="main__content__card card">
@@ -112,5 +113,5 @@ function updateList() {
             </div>
           </div>`;
   });
-  mainContent.innerHTML += mainContentHTML;
+  mainContent.innerHTML = mainContentHTML;
 }
