@@ -7,6 +7,7 @@ const cancelBookBtn = document.querySelector(".dialog__btn__cancel");
 const addBookDialog = document.querySelector(".main__content__dialog");
 const mainContent = document.querySelector(".main__content");
 const bookForm = document.querySelector("#bookForm");
+const dialogOverlay = document.querySelector(".dialog__overlay");
 
 // Open dialog with 'show' class for animation
 
@@ -32,11 +33,11 @@ function closeDialogWithAnimation() {
 }
 
 // Close dialog when clicking outside
-window.onclick = function (e) {
-  if (e.target == addBookDialog) {
-    closeDialogWithAnimation();
-  }
-};
+// window.onclick = function (e) {
+//   if (e.target == addBookDialog) {
+//     closeDialogWithAnimation();
+//   }
+// };
 
 let myLibrary = [];
 let mainContentHTML = "";
@@ -49,8 +50,7 @@ function Book(title, author, pages, read) {
 }
 
 Book.prototype.readStatus = function () {
-  const result = this.read ? "Read" : "Not Yet";
-  return console.log(result);
+  return this.read ? "Read" : "Not Yet";
 };
 
 Book.prototype.pushList = function () {
@@ -68,44 +68,57 @@ bookForm.addEventListener("submit", (e) => {
   if (!book_title || !book_author || !book_pages || !book_read) {
     alert("Please Insert Required Forms");
   } else {
-    if (!book_read.value) {
-      book_read.value = false;
-    } else {
-      book_read.value = true;
-    }
-
     addBooktoLibrary(
       book_title.value,
       book_author.value,
       book_pages.value,
-      book_read.value
+      book_read.checked
     );
   }
 
   book_title.value = "";
   book_author.value = "";
   book_pages.value = "";
-  book_read.value = "";
+  book_read.checked = false;
   closeDialogWithAnimation();
 });
 
-function addBooktoLibrary(title, book, pages, read) {
-  let reader = new Book(title, book, pages, read);
+function addBooktoLibrary(title, author, pages, read) {
+  let reader = new Book(title, author, pages, read);
   reader.pushList();
-  console.log(reader);
-  console.log(myLibrary);
+  saveLocalStorage(myLibrary);
   updateList();
 }
+
+function saveLocalStorage(data) {
+  let dataList = JSON.stringify(data);
+  localStorage.setItem("book", dataList);
+}
+
 function updateList() {
   mainContentHTML = "";
-  myLibrary.forEach(({ title, author, pages, read }) => {
+  let getData = localStorage.getItem("book");
+  let getDataList = JSON.parse(getData) || [];
+  console.log(getDataList);
+  getDataList.forEach((bookData) => {
+    // Re-create the Book instance from the stored data
+    let newBook = new Book(
+      bookData.title,
+      bookData.author,
+      bookData.pages,
+      bookData.read
+    );
+
+    // Use the readStatus method from the Book prototype
+    let readStatus = newBook.readStatus();
+
     mainContentHTML += `
     <div class="main__content__card card">
         <div class="card__text">
-              <p><span>Title:</span> ${title}</p>
-              <p><span>Author:</span> ${author}</p>
-              <p><span>Pages:</span> ${pages} pages</p>
-              <p><span>Status:</span> ${read}</p>
+              <p><span>Title:</span> ${newBook.title}</p>
+              <p><span>Author:</span> ${newBook.author}</p>
+              <p><span>Pages:</span> ${newBook.pages}</p>
+              <p><span>Status:</span> ${readStatus}</p>
             </div>
             <div class="card__btn">
               <button>Read</button>
@@ -115,3 +128,6 @@ function updateList() {
   });
   mainContent.innerHTML = mainContentHTML;
 }
+
+// Update List
+updateList();
