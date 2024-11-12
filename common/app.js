@@ -8,6 +8,7 @@ const addBookDialog = document.querySelector(".main__content__dialog");
 const mainContent = document.querySelector(".main__content");
 const bookForm = document.querySelector("#bookForm");
 const dialogOverlay = document.querySelector(".dialog__overlay");
+const updateReadStatus = document.querySelector(".updateReadStatus");
 
 // Open dialog with 'show' class for animation
 
@@ -90,6 +91,12 @@ function addBooktoLibrary(title, author, pages, read) {
   updateList();
 }
 
+function updateReadList(index) {
+  let getData = localStorage.getItem("book");
+  let getDataList = JSON.parse(getData) || [];
+  console.log(index.target);
+}
+
 function saveLocalStorage(data) {
   let dataList = JSON.stringify(data);
   localStorage.setItem("book", dataList);
@@ -99,7 +106,6 @@ function updateList() {
   mainContentHTML = "";
   let getData = localStorage.getItem("book");
   let getDataList = JSON.parse(getData) || [];
-  console.log(getDataList);
   getDataList.forEach((bookData) => {
     // Re-create the Book instance from the stored data
     let newBook = new Book(
@@ -121,8 +127,8 @@ function updateList() {
               <p><span>Status:</span> ${readStatus}</p>
             </div>
             <div class="card__btn">
-              <button>Read</button>
-              <button>Remove</button>
+              <button class="updateReadStatus">Read</button>
+              <button class="">Remove</button>
             </div>
           </div>`;
   });
@@ -131,3 +137,10 @@ function updateList() {
 
 // Update List
 updateList();
+
+// Event Delagation Due to the contents loads in updateList();
+mainContent.addEventListener("click", (e) => {
+  if (e.target.classList.contains("updateReadStatus")) {
+    updateReadList(e);
+  }
+});
