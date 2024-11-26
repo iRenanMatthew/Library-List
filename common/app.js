@@ -9,6 +9,10 @@ const mainContent = document.querySelector(".main__content");
 const bookForm = document.querySelector("#bookForm");
 const dialogOverlay = document.querySelector(".dialog__overlay");
 const updateReadStatus = document.querySelector(".updateReadStatus");
+const book_title = document.querySelector("#book_title");
+const book_author = document.querySelector("#book_author");
+const book_pages = document.querySelector("#book_pages");
+const book_read = document.querySelector("#book_read");
 
 // Open dialog with 'show' class for animation
 
@@ -40,10 +44,11 @@ function closeDialogWithAnimation() {
 //   }
 // };
 
-let myLibrary = [];
+let myLibrary = new Array();
 let mainContentHTML = "";
 
-function Book(title, author, pages, read) {
+function Book(id, title, author, pages, read) {
+  this.id = id;
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -61,15 +66,12 @@ Book.prototype.pushList = function () {
 bookForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  let book_title = document.querySelector("#book_title");
-  let book_author = document.querySelector("#book_author");
-  let book_pages = document.querySelector("#book_pages");
-  let book_read = document.querySelector("#book_read");
-
   if (!book_title || !book_author || !book_pages || !book_read) {
     alert("Please Insert Required Forms");
   } else {
+    let randomId = (Math.random() + 1).toString(36).substring(7);
     addBooktoLibrary(
+      randomId,
       book_title.value,
       book_author.value,
       book_pages.value,
@@ -84,8 +86,8 @@ bookForm.addEventListener("submit", (e) => {
   closeDialogWithAnimation();
 });
 
-function addBooktoLibrary(title, author, pages, read) {
-  let reader = new Book(title, author, pages, read);
+function addBooktoLibrary(id, title, author, pages, read) {
+  let reader = new Book(id, title, author, pages, read);
   reader.pushList();
   saveLocalStorage(myLibrary);
   updateList();
@@ -94,7 +96,26 @@ function addBooktoLibrary(title, author, pages, read) {
 function updateReadList(index) {
   let getData = localStorage.getItem("book");
   let getDataList = JSON.parse(getData) || [];
-  console.log(index.target);
+
+  let bookId = index.target.className.substr(-5);
+
+  const filteredData = getDataList.filter((filter) => filter.id === bookId);
+
+  filteredData[0].read = !filteredData[0].read;
+
+  saveLocalStorage(getDataList);
+  updateList();
+}
+
+function removeData(index) {
+  let getData = localStorage.getItem("book");
+  let getDataList = JSON.parse(getData) || [];
+
+  let bookId = index.target.className.substr(-5);
+  getDataList = getDataList.filter((item) => item.id !== bookId);
+
+  saveLocalStorage(getDataList);
+  updateList();
 }
 
 function saveLocalStorage(data) {
@@ -109,6 +130,7 @@ function updateList() {
   getDataList.forEach((bookData) => {
     // Re-create the Book instance from the stored data
     let newBook = new Book(
+      bookData.id,
       bookData.title,
       bookData.author,
       bookData.pages,
@@ -127,8 +149,8 @@ function updateList() {
               <p><span>Status:</span> ${readStatus}</p>
             </div>
             <div class="card__btn">
-              <button class="updateReadStatus">Read</button>
-              <button class="">Remove</button>
+              <button  class="updateReadStatus ${newBook.id}">Read</button>
+              <button class="removeData ${newBook.id}">Remove</button>
             </div>
           </div>`;
   });
@@ -138,9 +160,15 @@ function updateList() {
 // Update List
 updateList();
 
-// Event Delagation Due to the contents loads in updateList();
+// Event Delagation Due to the contents loads in updateList(); because using this code will not work
+// updateReadStatus.addEventListener("click", (e) => {
+//   updateReadList(e);
+// });
 mainContent.addEventListener("click", (e) => {
   if (e.target.classList.contains("updateReadStatus")) {
     updateReadList(e);
+  }
+  if (e.target.classList.contains("removeData")) {
+    removeData(e);
   }
 });
