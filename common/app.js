@@ -44,7 +44,10 @@ function closeDialogWithAnimation() {
 //   }
 // };
 
-let myLibrary = new Array();
+let getData = localStorage.getItem("book");
+let getDataList = JSON.parse(getData) || [];
+
+let myLibrary = getDataList || new Array();
 let mainContentHTML = "";
 
 function Book(id, title, author, pages, read) {
