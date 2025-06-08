@@ -12,7 +12,7 @@ const updateReadStatus = document.querySelector(".updateReadStatus");
 const book_title = document.querySelector("#book_title");
 const book_author = document.querySelector("#book_author");
 const book_pages = document.querySelector("#book_pages");
-const book_read = document.querySelector("#book_read");
+const book_status = document.querySelector("#book_read");
 
 
 // START: Open dialog with 'show' class for animation
@@ -45,19 +45,21 @@ function closeDialogWithAnimation() {
 
 let getLocalStorageData = localStorage.getItem('Books');
 let myLibrary = JSON.parse(getLocalStorageData) || [];
+let mainContentHTML = ''
 
 class Book {
-  constructor(id, title, author, pages, read){
+  constructor(id, title, author, pages, status){
     this.id = id;
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read
+    this.status = status
   }
 
   readStatus(){
-    return this.read ? "Read" : "Not Yet"
+    return !this.status ? "Not Yet" : "Read"
   }
+
   pushDataList(){
     myLibrary.push(this);
   }
@@ -71,7 +73,7 @@ bookForm.addEventListener('submit', (e) => {
 
  
 
-  if(!book_title || !book_author || !book_pages || !book_read){
+  if(!book_title || !book_author || !book_pages || !book_status){
     return alert("Please fillup all the fields needed");
   } else {
     let formData = {
@@ -79,14 +81,15 @@ bookForm.addEventListener('submit', (e) => {
       title: book_title.value, 
       author: book_author.value,
       pages: book_pages.value,
-      status: book_read.value
+      status: book_status.checked
     }
       
     addDataToLibrary(formData);
     book_title.value = ''
     book_author.value = ''
     book_pages.value = ''
-    book_read.checked = false
+    book_status.checked = false
+  
     closeDialogWithAnimation();
   }
 })
@@ -117,15 +120,39 @@ const saveToLocalStorage = (data) => {
 }
 
 const syncDisplay = () => { 
+  mainContentHTML = "";
   myLibrary.forEach((data) => {
     const newBook = new Book(data.id, data.title, data.author, data.pages, data.status);
-    console.log(newBook);
-  })
+
+    mainContentHTML += `
+      <div class="main__content__card card" book-id="${newBook.id}">
+          <div class="card__text">
+            <p><span>Title:</span> ${newBook.title}</p>
+            <p><span>Author:</span> ${newBook.author}</p>
+            <p><span>Pages:</span> ${newBook.pages}</p>
+            <p><span>Status:</span> ${newBook.readStatus()}</p>
+          </div>
+          <div class="card__btn">
+            <button  class="updateReadStatus ${newBook.id}">Read</button>
+            <button class="removeData">Remove</button>
+          </div>
+      </div>`;
+  });
+  
+
+  mainContent.innerHTML = mainContentHTML;
 }
 
 syncDisplay();
 
+mainContent.addEventListener('click', (e) => {
+  if(e.target.contain('updateReadStatus')){
+    console.log('add')
+  } else if (e.target.contain('removeData')){
+     console.log('remove')
+  }
 
-console.log(myLibrary)
+  typeof e.target;
+})
 
 
