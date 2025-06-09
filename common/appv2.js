@@ -121,6 +121,7 @@ const saveToLocalStorage = (data) => {
 
 const syncDisplay = () => { 
   mainContentHTML = "";
+  fetchData();
   myLibrary.forEach((data) => {
     const newBook = new Book(data.id, data.title, data.author, data.pages, data.status);
 
@@ -133,7 +134,7 @@ const syncDisplay = () => {
             <p><span>Status:</span> ${newBook.readStatus()}</p>
           </div>
           <div class="card__btn">
-            <button  class="updateReadStatus ${newBook.id}">Read</button>
+            <button  class="updateReadStatus">Read</button>
             <button class="removeData">Remove</button>
           </div>
       </div>`;
@@ -143,16 +144,38 @@ const syncDisplay = () => {
   mainContent.innerHTML = mainContentHTML;
 }
 
-syncDisplay();
+document.addEventListener('DOMContentLoaded', syncDisplay);
 
-mainContent.addEventListener('click', (e) => {
-  if(e.target.contain('updateReadStatus')){
-    console.log('add')
-  } else if (e.target.contain('removeData')){
-     console.log('remove')
+const removeBook = (id) => {
+  const bookAttribute = id.target.closest('.main__content__card').getAttribute('book-id')
+  const filteredBook = myLibrary.filter((data) =>  data.id !== bookAttribute)
+  saveToLocalStorage(filteredBook);
+  syncDisplay();
+}
+
+const updateBookStatus = (id) => {
+  const bookAttribute = id.target.closest('.main__content__card').getAttribute('book-id')
+  const filteredBook = myLibrary.find((data) =>  data.id === bookAttribute);
+
+  if (filteredBook){
+    filteredBook.status = !filteredBook.status;
+    saveToLocalStorage(myLibrary);
+    syncDisplay();
   }
 
-  typeof e.target;
+}
+
+const fetchData = () => {
+  getLocalStorageData = localStorage.getItem('Books');
+  myLibrary = getLocalStorageData ? JSON.parse(getLocalStorageData) : [];
+}
+
+mainContent.addEventListener('click', (e) => {
+  if(e.target.classList.contains('updateReadStatus')){
+    updateBookStatus(e)
+  } else if (e.target.classList.contains('removeData')){
+    removeBook(e)
+  }
 })
 
 
