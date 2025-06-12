@@ -40,10 +40,11 @@
           <h1 class="text-center">List of Books</h1>
         </div>
         <div class="main__content"></div>
-        <dialog class="main__content__dialog">
+        <dialog class="main__content__dialog add">
           <form method="dialog" id="bookForm">
-            <h1 class="text-center">Add new book</h1>
+            <h2 class="text-center">Add new book</h2>
             <fieldset>
+              <label>Book Title</label>
               <input
                 type="text"
                 name="book_title"
@@ -53,6 +54,7 @@
               />
             </fieldset>
             <fieldset>
+              <label>Book Author</label>
               <input
                 type="text"
                 name="book_author"
@@ -63,6 +65,7 @@
               />
             </fieldset>
             <fieldset>
+              <label>Book Pages</label>
               <input
                 type="number"
                 name="book_pages"
@@ -73,12 +76,63 @@
                 required
               />
             </fieldset>
-            <fieldset class="checkbox">
-              <label for="book_read">Have you read it?</label>
-              <input type="checkbox" id="book_read" />
+            <fieldset>
+              <label>Book Status</label>
+              <div class="status-wrapper">
+                  <input type="radio" value="not-read" id="book-not-read" name="book_status" class="book-status" checked>
+                  <label for="edit-not-read">Not Read Yet</label> 
+              </div>
+              <div class="status-wrapper">
+                  <input type="radio" value="reading" id="book-reading" name="book_status" class="book-status">
+                  <label for="edit-reading">Reading</label> 
+              </div>
+              <div class="status-wrapper">
+                  <input type="radio" value="finished" id="book-finished" name="book_status" class="book-status">
+                  <label for="edit-finished">Finished</label> 
+              </div>
             </fieldset>
             <div class="dialog__btn">
               <button type="submit" class="dialog__btn__save">Save</button>
+              <button type="button" class="dialog__btn__cancel">Cancel</button>
+            </div>
+          </form>
+        </dialog>
+        <dialog class="main__content__dialog edit">
+          <form method="dialog" id="editBookDetails">
+            <h2 class="text-center">Edit book details</h2>
+            <fieldset>
+              <label>Book Title</label>
+              <input type="text" id="edit_title"> 
+            </fieldset>
+
+            <fieldset>
+              <label>Book Author</label>
+              <input type="text" id="edit_author"> 
+            </fieldset>
+
+            <fieldset>
+              <label>Book Pages</label>
+              <input type="text" id="edit_pages"> 
+            </fieldset>
+            
+            <fieldset>
+              <label>Book Status</label>
+              <div class="status-wrapper">
+                  <input type="radio" value="not-read" id="edit-not-read" name="edit_status" class="edit-status" checked>
+                  <label for="edit-not-read">Not Read Yet</label> 
+              </div>
+              <div class="status-wrapper">
+                  <input type="radio" value="reading" id="edit-reading" name="edit_status" class="edit-status">
+                  <label for="edit-reading">Reading</label> 
+              </div>
+              <div class="status-wrapper">
+                  <input type="radio" value="finished" id="edit-finished" name="edit_status" class="edit-status">
+                  <label for="edit-finished">Finished</label> 
+              </div>
+            </fieldset>
+
+            <div class="dialog__btn">
+              <button type="submit" class="dialog__btn__save update">Update</button>
               <button type="button" class="dialog__btn__cancel">Cancel</button>
             </div>
           </form>

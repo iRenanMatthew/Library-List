@@ -103,7 +103,7 @@ fieldset input {
   background-color: var(--color-gray);
 }
 
-fieldset input:not([type="checkbox"]) {
+fieldset input:not([type="checkbox"]):not([type="radio"]) {
   border: none;
   width: 100%;
   padding: 0.8em 1em;
@@ -125,6 +125,7 @@ fieldset.checkbox {
   --color-gray: #e9e9e9c0;
   --color-green: #7bff6d;
   --color-red: #ff8383;
+  --color-blue: #67d4ff;
   --font-title: Anton, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --font-body: Poppins, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --font-body2: Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -367,6 +368,50 @@ dialog.hide::backdrop {
 .main__content__card .card__btn button:first-child {
   background-color: var(--color-green);
 }
+
+.dialog__btn__save.update{
+  background-color: var(--color-blue);
+}
+
+
+/* Dialog Edit */
+.main__content__dialog h2 {
+	 margin-bottom: 20px;
+}
+ .main__content__dialog fieldset {
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: flex-start;
+	 margin-bottom: 10px;
+}
+ .main__content__dialog fieldset label {
+	 text-align: left;
+   font-weight: 500;
+}
+
+ .main__content__dialog .dialog__btn {
+	 margin-top: 50px;
+}
+
+ .main__content__dialog fieldset .status-wrapper{
+  display: flex;
+  gap: 5px;
+  font-weight: 400 !important;
+  margin-bottom: 5px;
+ }
+
+  .main__content__dialog fieldset .status-wrapper:first-of-type{
+    
+    margin-top: 10px;
+  
+  }
+
+
+.main__content__dialog fieldset .status-wrapper label{
+    font-weight: 400;
+    margin: 0;
+}
+ 
 
 .main__content__card {
   display: flex;
