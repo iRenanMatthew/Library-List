@@ -49,7 +49,6 @@ cancelBookBtn.forEach((cancel)=> {
 })
 
 function closeDialogWithAnimation(content) {
-  console.log(content)
   content.classList.add("hide"); 
   setTimeout(() => {
     content.classList.remove("show", "hide"); 
@@ -129,11 +128,10 @@ const loadBookDetails = (bookID) => {
   let filteredData = myLibrary.find((data) => data.id === getBookId);
   const {author, id, pages, status, title} = filteredData;
 
-
+  editBookForm.setAttribute('book-id', id);
   edit_title.value = title
   edit_author.value = author
   edit_pages.value = pages
-  edit_status.value = status
 
   
   edit_status.forEach((radio) => {
@@ -142,12 +140,26 @@ const loadBookDetails = (bookID) => {
     }
   });
 
-} 
-
-console.log(edit_title)
+}
 
 editBookForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
+  
+  let book_id = editBookForm.getAttribute('book-id');
+  let filteredBook = myLibrary.find((book) => book.id == book_id)
+  filteredBook.title = edit_title.value 
+  filteredBook.author = edit_author.value
+  filteredBook.pages = edit_pages.value
+
+  edit_status.forEach((radio) => {
+      if (radio.checked) {
+        filteredBook.status = radio.value;
+      }
+    });
+    saveToLocalStorage(myLibrary);
+    syncDisplay();
+    closeDialogWithAnimation(editBookDialog)
 })
 
 const generateRandomId = () =>{
